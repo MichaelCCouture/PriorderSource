@@ -1,0 +1,362 @@
+<!-- index.html
+     Priorder to do list app.
+
+	 Revision History
+		 Michael Couture, Jeremy Buick, 2015.03.12: Created as prototype.
+		 Michael Couture, Jeremy Buick, 2015.04.03: Updated for working app.
+-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>Priorder</title>
+    <link href="css/themes/default/jquery.mobile-1.1.1.css" rel="stylesheet" type="text/css" />
+    <link href="css/custom.css" rel="stylesheet" type="text/css" />
+
+    <!-- JavaScript HTML requirements -->
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/jquery.mobile-1.1.1.min.js" type="text/javascript"></script>
+    <script src="js/geo.js" type="text/javascript"></script>
+	<script src="js/jquery.validate.js" type="text/javascript"></script>
+    <script src="js/jquery.validate.min.js" type="text/javascript"></script>
+
+    <script src="js/global.js" type="text/javascript"></script>
+    <script src="js/database.js" type="text/javascript"></script>
+	<script src="js/util.js" type="text/javascript"></script>
+</head>
+
+<body>
+	<section data-role="page" id="Home">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="b" class="ui-btn-active">Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="c">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="c">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="c">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<ul data-role="listview" id="TaskList" data-inset="true">
+			</ul>
+
+			<a href="#CompletedTaskPage" id="viewCompletedTaskPage" data-role="button" data-theme="b">View Completed Tasks</a>
+		</section>
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>				
+	</section>
+
+	<section data-role="page" id="CompletedTaskPage">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="b" class="ui-btn-active">Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="c">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="c">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="c">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<a href="#Home" data-role="button" data-theme="a">View Current Tasks</a>
+
+			<ul data-role="listview" id="CompletedTaskList" data-inset="true">
+			</ul>
+		</section>
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>				
+	</section>
+
+	<section data-role="page" id="EditSubtasks">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="c">Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="b" class="ui-btn-active">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="c">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="c">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<h1>Add A Subtask</h1>
+			<form id="EditSubTaskForm" method="post" name="EditSubTaskForm" data-ajax="false">
+				<label for="editSubtaskName">Subtask Name:</label>
+				<input type="text" name="editSubtaskName" id="editSubtaskName" />
+				
+				<label for="editSubtaskDueDate">Due Date:</label>
+				<input type="date" name="editSubtaskDueDate" id="editSubtaskDueDate"/>
+				
+				<label for="editSubtaskWeight">Weight (of task):</label>
+				<input type="range" name="editSubtaskWeight" id="editSubtaskWeight" value="0" min="0" max="100">
+				
+				<label for="editSubtaskAdditionalNotes">Additional Notes:</label>
+				<textarea name="editSubtaskAdditionalNotes" id="editSubtaskAdditionalNotes"></textarea>
+
+				<button id="editSubmitSubtask" name="editSubmitSubtask" data-theme="b" data-inline="false" type="button">Update</button>
+			</form>
+			
+			<a href="#ViewSubtasks" data-role="button" data-theme="b">Back</a>
+		</section>
+		   
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>
+	</section>
+
+	<section data-role="page" id="AddSubtasks">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="c">Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="b" class="ui-btn-active">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="c">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="c">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<h1>Add A Subtask</h1>
+			<form id="AddSubTaskForm" method="post" name="AddSubTaskForm" data-ajax="false">
+				<label for="subtaskName">Subtask Name:</label>
+				<input type="text" name="subtaskName" id="subtaskName" />
+				
+				<label for="subtaskDueDate">Due Date:</label>
+				<input type="date" name="subtaskDueDate" id="subtaskDueDate"/>
+				
+				<label for="subtaskWeight">Weight (of task):</label>
+				<input type="range" name="subtaskWeight" id="subtaskWeight" value="0" min="0" max="100">
+				
+				<label for="subtaskAdditionalNotes">Additional Notes:</label>
+				<textarea name="subtaskAdditionalNotes" id="subtaskAdditionalNotes"></textarea>
+
+				<button id="submitSubtask" name="submitSubtask" data-theme="b" data-inline="false" type="button">Save</button>
+			</form>
+		</section>
+		   
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>
+	</section>
+
+	<section data-role="page" id="AddTask">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="c">Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="b" class="ui-btn-active">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="c">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="c">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<h1>Add A New Task</h1>
+			<form id="AddTaskForm" method="post" name="AddTaskForm" data-ajax="false">
+				<label for="taskName">Task Name:</label>
+				<input type="text" name="taskName" id="taskName" />
+				
+				<label for="taskCategory">Task Category:</label>
+				<select name="taskCategory" id="taskCategory">
+				</select>
+				
+				<label for="taskType">Task Type:</label>
+				<select name="taskType" id="taskType">
+				</select>
+				
+				<label for="dueDate">Due Date:</label>
+				<input type="date" name="dueDate" id="dueDate"/>
+				
+				<label for="gradeWeight">Grade Weight:</label>
+				<input type="range" name="gradeWeight" id="gradeWeight" value="0" min="0" max="100">
+				
+				<label for="additionalNotes">Additional Notes:</label>
+				<textarea name="additionalNotes" id="additionalNotes"></textarea>
+
+				<button id="submitTaskAddSubtasks" name="submitTaskAddSubtasks" data-theme="b" data-inline="false" type="button">Save and Add Subtasks</button>
+				<button id="submitTask" name="submitTask" data-theme="b" data-inline="false" type="button">Save</button>
+			</form>
+		</section>
+		   
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>
+	</section>
+
+	<section data-role="page" id="ViewSubtasks">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="c">Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="c">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="c">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="c">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<table id="subtaskTable" name="subtaskTable" data-role="table" data-mode="reflow" class="hideableTableList ui-responsive table-stroke ui-shadow" width="100%">
+				<caption><h4>Subtasks</h4></caption>
+				<thead>
+					<tr>
+						<th></th>
+						<th width="170"></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+
+			<a href="#AddSubtasks" id="addSubtask" data-role="button" data-theme="b">Add Subtask</a>
+		</section>
+		   
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>
+	</section>
+
+	<section data-role="page" id="EditTask">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="c">Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="c" class="ui-btn-active">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="c">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="c">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<h1>Edit Task</h1>
+			<form id="EditTaskForm" method="post" name="EditTaskForm" data-ajax="false">
+				<label for="editTaskName">Task Name:</label>
+				<input type="text" name="editTaskName" id="editTaskName" />
+				
+				<label for="editTaskCategory">Task Category:</label>
+				<select name="editTaskCategory" id="editTaskCategory">
+				</select>
+				
+				<label for="editTaskType">Task Type:</label>
+				<select name="editTaskType" id="editTaskType">
+				</select>
+				
+				<label for="editDueDate">Due Date:</label>
+				<input type="date" name="editDueDate" id="editDueDate"/>
+				
+				<label for="editGradeWeight">Grade Weight:</label>
+				<input type="range" name="editGradeWeight" id="editGradeWeight" min="0" max="100">
+				
+				<label for="editAdditionalNotes">Additional Notes:</label>
+				<textarea name="editAdditionalNotes" id="editAdditionalNotes"></textarea>
+
+				<button id="editSubmitTask" name="editSubmitTask" data-theme="b" data-inline="false" type="button">Update</button>
+				<button id="editTaskComplete" name="editTaskComplete" data-theme="e" data-inline="false" type="button">Complete Task</button>
+				<button id="editTaskDelete" name="editTaskDelete" data-theme="a" data-inline="false" type="button">Delete Task</button>
+			</form>
+		</section>
+		   
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>
+	</section>
+
+	<section data-role="page" id="AddCategory">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="c" >Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="c">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="b" class="ui-btn-active">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="c">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<h1>Add A New Category</h1>
+			<form id="AddCategoryForm" method="post" name="AddCategoryForm" data-ajax="false">
+				<label for="categoryName">Category Name:</label>
+				<input type="text" name="categoryName" id="categoryName"/>
+				
+				<button id="submitCategory" name="submitCategory" data-theme="b" data-inline="false" type="button">Save</button>
+			</form>
+
+			<table id="currentCategories" name="currentCategories" data-role="table" data-mode="reflow" class="hideableTableList ui-responsive table-stroke ui-shadow">
+				<caption><h4>Current Categories</h4></caption>
+				<thead>
+					<tr>
+						<th width="100%"></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</section>
+		   
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>
+	</section>
+
+	<section data-role="page" id="AddType">
+		<header data-role="header" data-position="fixed">
+			<h1>Priorder</h1>
+			<div data-role="navbar" data-iconpos="bottom">
+			<ul>
+				<li><a href="#Home" data-icon="home" data-theme="c" >Home</a></li>
+				<li><a href="#AddTask" data-icon="plus" data-theme="c">Add Task</a></li>
+				<li><a href="#AddCategory" data-icon="plus" data-theme="c">Add Category</a></li>
+				<li><a href="#AddType" data-icon="plus" data-theme="b" class="ui-btn-active">Add Type</a></li>
+			</ul>
+			</div>
+		</header>
+		
+		<section data-role="content">
+			<h1>Add A New Type</h1>
+			<form id="AddTypeForm" method="post" name="AddTypeForm" data-ajax="false">
+				<label for="typeName">Type Name:</label>
+				<input type="text" name="typeName" id="typeName"/>
+				
+				<button id="submitType" name="submitType" data-theme="b" data-inline="false" type="button">Save</button>
+			</form>
+
+			<table id="currentTypes" name="currentTypes" data-role="table" data-mode="reflow" class="hideableTableList ui-responsive table-stroke ui-shadow">
+				<caption><h4>Current Types</h4></caption>
+				<thead>
+					<tr>
+						<th width="100%"></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</section>
+		   
+		<footer data-role="footer" data-position="fixed">
+			<h4>&copy; Michael Couture & Jeremy Buick 2015</h4>
+		</footer>
+	</section>
+</body>
+</html>

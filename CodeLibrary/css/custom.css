@@ -1,0 +1,23 @@
+/* custom.css
+ * Custom CSS for Priorder.
+ *
+ * Revision History
+ *	   Jeremy Buick, 2015.03.04: Created.
+ */
+
+img { max-width: 100%; }
+
+.red { color : red; }
+
+label.error {
+	color: #F00;
+	font-weight: bold;
+}
+
+input.error, select.error, textarea.error {
+	border: 1px red solid;
+}
+
+.hideableTableList tbody td {
+	border-bottom: 1px solid #e6e6e6;
+}
